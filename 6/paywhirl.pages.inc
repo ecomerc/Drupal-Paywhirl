@@ -126,7 +126,6 @@ this.top.location = '$base_url';
 			$event_json = json_decode($input);
 			// Do something with $event_json
 			print_r($event_json);
-			http_response_code(200); // PHP 5.4 or greater
 			
 			// Create our message variables.
 			$variables = array('data' => $event_json);
@@ -138,4 +137,5 @@ this.top.location = '$base_url';
 			}
 			
 		}
+		die("all good");
 	}			

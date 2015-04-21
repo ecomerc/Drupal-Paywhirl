@@ -1,0 +1,5 @@
+; $Id$
+package = EcoMerc Custom
+name = Paywhirl Integration
+description = "Link Paywhirl to Drupal"
+core = 6.x

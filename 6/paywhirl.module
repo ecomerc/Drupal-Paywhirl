@@ -1,0 +1,87 @@
+<?php
+	
+	function paywhirl_help($path, $arg) {
+		switch ($path) {
+			case 'admin/modules#description':
+			return t('paywhirl a');
+			case 'admin/help#paywhirl';
+			return t('paywhirl b');
+			case 'admin/settings/paywhirl':
+			return t('paywhirl d');
+		}
+	} 
+	
+	
+	
+	function paywhirl_menu() {
+		$items = array();
+		
+		$items['paywhirl/passthrough'] = array(
+		'title' => 'paywhirl',
+		'page callback' => 'paywhirl_passthrough',
+		'access arguments' => array('access content'),
+		'file' => 'paywhirl.pages.inc',
+		'type' => MENU_CALLBACK,
+		);
+		
+		$items['paywhirl/webhook'] = array(
+		'title' => 'paywhirl',
+		'page callback' => 'paywhirl_webhook',
+		'access arguments' => array('access content'),
+		'file' => 'paywhirl.pages.inc',
+		'type' => MENU_CALLBACK,
+		);
+		
+		
+		
+		$items['admin/settings/paywhirl'] = array(
+		'title' => 'Paywhirl',
+		'description' => 'Change settings for the htmlhelp module.',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('paywhirl_admin_settings'),
+		'access arguments' => array('administer site configuration'),
+		);
+		return $items;
+	}
+	
+	
+	// Implementation of hook_settings()
+	function paywhirl_admin_settings() {
+		global $base_url;
+		
+		$key = variable_get('paywhirl_key',  md5("paywhirl" . time ()));
+		
+		$form['paywhirl_key'] = array(
+		'#type' => 'textfield', '#size' => 30, '#maxlength' => 50,
+		'#title' => t('Drupal server key'),
+		'#description' => t('This is the SECRET key that no one should ever have, it is part of the passthrough urls and webhooks '),
+		'#default_value' => $key,
+		);
+		
+		$form["paywhirl_server"] = array(
+		'#type' => 'textfield', '#size' => 30, '#maxlength' => 30,
+		'#title' => t('Paywhirl Server'),
+		'#default_value' => variable_get('paywhirl_server', 'https://stage.paywhirl.com/'),
+		'#description' => t('The paywhirl server (staging or production)')
+		);
+		
+		
+		$form['paywhirl_url_passthrough'] = array(  
+		'#type' => 'item', 
+		'#title' => t('Passthrough Url'),
+		'#description' => t('Copy this into Paywhirl Widget Passthrough - KEEP IT SECRET'),
+		'#value' => $base_url . "/paywhirl/passthrough/" . $key,
+		);
+		
+		$form['paywhirl_url_webhook'] = array(  
+		'#type' => 'item', 
+		'#title' => t('Webhook Url'),
+		'#description' => t('Copy this into Paywhirl Webhook - KEEP IT SECRET'),
+		'#value' => $base_url . "/paywhirl/webhook/" . $key,
+		);
+		
+		
+		
+		return system_settings_form($form);
+	}
+	

@@ -44,10 +44,9 @@
 	
 	function _paywhirl_load_user($email, $password) {
 	
-		$mail_uid = _paywhirl_existing_uid($email);
 		
 		$datasearch = '%s:17:"paywhirl_password";s:32:"'.md5($password).'";%';
-		$uid = db_result(db_queryd_range('SELECT uid FROM {users} WHERE  uid = %d AND data like \'%s\'', $mail_uid,$datasearch  , 0, 1));
+		$uid = db_result(db_query_range('SELECT uid FROM {users} WHERE mail = "%s" AND data like \'%s\'', $email, $datasearch  , 0, 1));
 		
 		if (isset($uid)) {
 			if ($existing = user_load($uid)) {

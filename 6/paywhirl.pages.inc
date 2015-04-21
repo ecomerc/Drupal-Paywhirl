@@ -97,22 +97,7 @@ this.top.location = '$base_url';
 		header("Location: $base_url/paywhirl/breakout");
 		die();
 	}
-	
-	/*
 		
-		// Define the errors.
-		$constants = get_defined_constants(true);
-		$json_errors = array();
-		foreach ($constants["json"] as $name => $value) {
-		if (!strncmp($name, "JSON_ERROR_", 11)) {
-		$json_errors[$value] = $name;
-		}
-		}
-		echo print_r(json_decode($json))."\n";
-		echo 'Last error: ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
-		
-	*/
-	
 	function paywhirl_webhook() {
 		
 		$key = variable_get('paywhirl_key',  md5("paywhirl" . time ()));
@@ -124,20 +109,14 @@ this.top.location = '$base_url';
 			// Retrieve the request's body and parse it as JSON
 			$input = @file_get_contents("php://input");
 			$event_json = json_decode($input);
-			echo "<pre>";
-			// Do something with $event_json
-			print_r($event_json);
 			
 			// Create our message variables.
 			$variables = array('data' => $event_json);
 			
 			// Make sure at least one module implements our hook.
 			if (sizeof(module_implements('paywhirl_webhook')) > 0) {
-				echo "there is one module enabled\n";
-				// Call all modules that implement the hook, and let them make changes to $variables.
 				$variables = module_invoke_all('paywhirl_webhook', $variables);
 			}
-			echo "\nvariables:" . print_r($variables, true); 
 		}
-		die("\nall good</pre>");
+		die("");
 	}			

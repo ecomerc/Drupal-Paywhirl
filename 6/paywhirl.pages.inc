@@ -5,7 +5,7 @@
 	
 	function paywhirl_user_page($account) {
 		drupal_set_title($account->name);
-		$key = variable_get('paywhirl_widgetkey',  ""));
+		$key = variable_get('paywhirl_widgetkey',  "");
 		
 		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
 		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/login?api_key=".$key."'></iframe>";
@@ -16,7 +16,7 @@
 	
 	
 	function paywhirl_login() {
-		$key = variable_get('paywhirl_widgetkey',  ""));
+		$key = variable_get('paywhirl_widgetkey',  "");
 		
 		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
 		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/login?api_key=".$key."'></iframe>";
@@ -26,7 +26,7 @@
 	}
 	
 	function paywhirl_forgot() {
-		$key = variable_get('paywhirl_widgetkey',  ""));
+		$key = variable_get('paywhirl_widgetkey',  "");
 		
 		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
 		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/forgot-password?api_key=".$key."'></iframe>";

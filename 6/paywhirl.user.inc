@@ -1,5 +1,47 @@
 <?php
 	
+	
+	function _paywhirl_create_user($paywhirldata) {
+		
+		if ($existing = user_load(array('mail' => $paywhirldata["email"]))) {
+		
+			$account['paywhirl_id'] = $paywhirldata["stripe_id"];
+			$account['paywhirl_password'] = md5("" . $paywhirldata["password"]);
+		
+			$existing = user_save($existing, $account);
+			$password = "";
+			return $existing;
+		}
+		else {
+			// Only set a user name if we are not updating an existing record.
+			if (strpos($paywhirldata["email"], "@") > 1) {
+				$username = drupal_substr($paywhirldata["email"], 0, strpos($paywhirldata["email"], "@"));
+			} else {
+				$username = $paywhirldata["first_name"] . $paywhirldata["last_name"];
+			}
+			$account = array();
+			$account['name'] = _paywhirl_create_username(trim($username));
+			$account['mail'] = $paywhirldata["email"];
+			$account['profile_name'] = $paywhirldata["first_name"] . " " . $paywhirldata["last_name"];
+			$account['pass'] = $paywhirldata["password"];
+			$account['access'] = 1;
+			$account['status'] = 1;			
+			$account['paywhirl_id'] = $paywhirldata["stripe_id"];
+			$account['paywhirl_password'] = md5("" . $paywhirldata["password"]);
+			
+			$profile = json_decode($data["profile"], true);
+			foreach (array_expression as $key => $value) {
+				$account["profile_".strtolower($key)] = $value;
+			}
+			
+			
+			$account = user_save('', $account);
+			return $account;
+		}
+	}
+	
+	
+	
 	function _paywhirl_load_user($email, $password) {
 	
 		$mail_uid = _paywhirl_existing_uid($email);

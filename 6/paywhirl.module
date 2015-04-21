@@ -33,6 +33,39 @@
 		);
 		
 		
+		$items['paywhirl/login'] = array(
+		'title' => 'Paywhirl Login',
+		'page callback' => 'paywhirl_login',
+		'access arguments' => array('access content'),
+		'file' => 'paywhirl.pages.inc',
+		'type' => MENU_CALLBACK,
+		);
+		
+		
+		$items['paywhirl/forgotpassword'] = array(
+		'title' => 'Paywhirl Forgot password',
+		'page callback' => 'paywhirl_forgot',
+		'access arguments' => array('access content'),
+		'file' => 'paywhirl.pages.inc',
+		'type' => MENU_CALLBACK,
+		);
+		
+		$items['paywhirl/logout'] = array(
+		'title' => 'Paywhirl Logout',
+		'page callback' => 'paywhirl_logout',
+		'access arguments' => array('access content'),
+		'file' => 'paywhirl.pages.inc',
+		'type' => MENU_CALLBACK,
+		);
+		
+		$items['user/%user/subscription'] = array(
+		'title' => 'Subscription',
+		'page callback' => 'paywhirl_user_page',
+		'file' => 'paywhirl.pages.inc',
+		'type' => MENU_LOCAL_TASK,
+		'weight' => 11,
+		);
+		
 		
 		$items['admin/settings/paywhirl'] = array(
 		'title' => 'Paywhirl',
@@ -44,22 +77,31 @@
 		return $items;
 	}
 	
+	//
 	
 	// Implementation of hook_settings()
 	function paywhirl_admin_settings() {
 		global $base_url;
 		
+		
+		$form['paywhirl_widgetkey'] = array(
+		'#type' => 'textfield', '#size' => 40, '#maxlength' => 50,
+		'#title' => t('Paywhirl Widget key'),
+		'#description' => t('This is the widget key that will be used for the embedding codes'),
+		'#default_value' => variable_get('paywhirl_widgetkey', ''),
+		);
+		
 		$key = variable_get('paywhirl_key',  md5("paywhirl" . time ()));
 		
 		$form['paywhirl_key'] = array(
-		'#type' => 'textfield', '#size' => 30, '#maxlength' => 50,
+		'#type' => 'textfield', '#size' => 40, '#maxlength' => 50,
 		'#title' => t('Drupal server key'),
 		'#description' => t('This is the SECRET key that no one should ever have, it is part of the passthrough urls and webhooks '),
 		'#default_value' => $key,
 		);
 		
 		$form["paywhirl_server"] = array(
-		'#type' => 'textfield', '#size' => 30, '#maxlength' => 30,
+		'#type' => 'textfield', '#size' => 40, '#maxlength' => 30,
 		'#title' => t('Paywhirl Server'),
 		'#default_value' => variable_get('paywhirl_server', 'https://stage.paywhirl.com/'),
 		'#description' => t('The paywhirl server (staging or production)')

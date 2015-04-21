@@ -1,44 +1,44 @@
 <?php
 	include_once("paywhirl.user.inc");
-
 	
-	function _paywhirl_create_user($paywhirldata) {
+	
+	
+	function paywhirl_user_page($account) {
+		drupal_set_title($account->name);
+		$key = variable_get('paywhirl_widgetkey',  ""));
 		
-		if ($existing = user_load(array('mail' => $paywhirldata["email"]))) {
+		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
+		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/login?api_key=".$key."'></iframe>";
 		
-			$account['paywhirl_id'] = $paywhirldata["stripe_id"];
-			$account['paywhirl_password'] = md5("" . $paywhirldata["password"]);
+		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
+		return  $content;
+	}
+	
+	
+	function paywhirl_login() {
+		$key = variable_get('paywhirl_widgetkey',  ""));
 		
-			$existing = user_save($existing, $account);
-			$password = "";
-			return $existing;
-		}
-		else {
-			// Only set a user name if we are not updating an existing record.
-			if (strpos($paywhirldata["email"], "@") > 1) {
-				$username = drupal_substr($paywhirldata["email"], 0, strpos($paywhirldata["email"], "@"));
-			} else {
-				$username = $paywhirldata["first_name"] . $paywhirldata["last_name"];
-			}
-			$account = array();
-			$account['name'] = _paywhirl_create_username(trim($username));
-			$account['mail'] = $paywhirldata["email"];
-			$account['profile_name'] = $paywhirldata["first_name"] . " " . $paywhirldata["last_name"];
-			$account['pass'] = $paywhirldata["password"];
-			$account['access'] = 1;
-			$account['status'] = 1;			
-			$account['paywhirl_id'] = $paywhirldata["stripe_id"];
-			$account['paywhirl_password'] = md5("" . $paywhirldata["password"]);
-			
-			$profile = json_decode($data["profile"], true);
-			foreach (array_expression as $key => $value) {
-				$account["profile_".strtolower($key)] = $value;
-			}
-			
-			
-			$account = user_save('', $account);
-			return $account;
-		}
+		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
+		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/login?api_key=".$key."'></iframe>";
+		
+		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
+		return  $content;
+	}
+	
+	function paywhirl_forgot() {
+		$key = variable_get('paywhirl_widgetkey',  ""));
+		
+		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
+		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/forgot-password?api_key=".$key."'></iframe>";
+		
+		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
+		return  $content;
+	}
+	
+	
+	function paywhirl_logout() {	
+		header("Location: https://stage.paywhirl.com/widget/logout");
+		die();
 	}
 	
 	function paywhirl_passthrough() {
@@ -46,7 +46,7 @@
 		
 		$key = variable_get('paywhirl_key',  md5("paywhirl" . time ()));
 		$args = func_get_args();
-				
+		
 		
 		if ($args[0] == $key) {
 			if (isset($_GET["data"])) {
@@ -58,14 +58,14 @@
 					$profile = json_decode($data["profile"], true);
 					$user = _paywhirl_create_user($data);
 					
-				} else {
+					} else {
 					// PAYWHIRL LOGGING IN
 					if ($existing = _paywhirl_load_user($data["email"], $data["password"])) {
 						$user = $existing;
 					}
 					
 				}
-			} else {
+				} else {
 				//LOGOUT
 				require_once(drupal_get_path('module', 'user') . '/user.pages.inc');
 				user_logout();
@@ -114,4 +114,4 @@
 			}
 			
 		}
-	}		
+	}			

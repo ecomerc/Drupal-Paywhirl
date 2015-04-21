@@ -6,10 +6,14 @@
 		
 		echo "Mail: " . $mail_uid."\n";
 		
-		
-		
-		
-		$uid = db_result(db_queryd_range('SELECT f.name, v.value FROM {profile_fields} f INNER JOIN {profile_values} v ON f.fid = v.fid WHERE f.name = "%s" AND uid = %d AND v.value = "%s"', "paywhirl_password", $mail_uid, md5($password), 0, 1));
+		/*
+		SELECT * 
+FROM  `drup_users` 
+WHERE  `uid` =3906
+AND  `data` LIKE  ''
+LIMIT 0 , 30*/
+		$datasearch = '%s:17:"paywhirl_password";s:32:"'.md5($password).'";%';
+		$uid = db_result(db_queryd_range('SELECT uid FROM {users} WHERE  uid = %d AND data like \'%s\'', $mail_uid,$datasearch  , 0, 1));
 	
 		die("Final: " . $uid);
 	

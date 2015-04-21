@@ -12,10 +12,10 @@ this.top.location = '$base_url';
 	function paywhirl_user_page($account) {
 		drupal_set_title($account->name);
 		$key = variable_get('paywhirl_widgetkey',  "");
+		$server = variable_get('paywhirl_server',  "");
 		
-		//TODO make some sort of setting for the text
-		$content = "<p>This is the new subscription based login, if your account was created <b>before</b> April 21st 2015 - <a href='/user'>login here</a></p><script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
-		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/login?api_key=".$key."'></iframe>";
+		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
+		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='$server/widget/login?api_key=".$key."'></iframe>";
 		
 		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
 		return  $content;
@@ -23,9 +23,10 @@ this.top.location = '$base_url';
 	
 	function paywhirl_subscribe() {
 		$key = variable_get('paywhirl_widgetkey',  "");
+		$server = variable_get('paywhirl_server',  "");
 		
 		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
-		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget?api_key=".$key."'></iframe>";
+		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='$server/widget?api_key=".$key."'></iframe>";
 		
 		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
 		return  $content;
@@ -33,9 +34,11 @@ this.top.location = '$base_url';
 	
 	function paywhirl_login() {
 		$key = variable_get('paywhirl_widgetkey',  "");
+		$server = variable_get('paywhirl_server',  "");
 		
-		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
-		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/login?api_key=".$key."'></iframe>";
+		//TODO make some sort of setting for the text
+		$content = "<p>This is the new subscription based login, if your account was created <b>before</b> April 21st 2015 - <a href='/user'>login here</a></p><script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
+		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='$server/widget/login?api_key=".$key."'></iframe>";
 		
 		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
 		return  $content;
@@ -43,9 +46,10 @@ this.top.location = '$base_url';
 	
 	function paywhirl_forgot() {
 		$key = variable_get('paywhirl_widgetkey',  "");
+		$server = variable_get('paywhirl_server',  "");
 		
 		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
-		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/forgot-password?api_key=".$key."'></iframe>";
+		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='$server/widget/forgot-password?api_key=".$key."'></iframe>";
 		
 		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
 		return  $content;
@@ -53,7 +57,9 @@ this.top.location = '$base_url';
 	
 	
 	function paywhirl_logout() {	
-		header("Location: https://stage.paywhirl.com/widget/logout");
+		$server = variable_get('paywhirl_server',  "");
+		
+		header("Location: $server/widget/logout");
 		die();
 	}
 	

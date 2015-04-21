@@ -4,32 +4,15 @@
 	
 		$mail_uid = _paywhirl_existing_uid($email);
 		
-		echo "Mail: " . $mail_uid."\n";
-		
-		/*
-		SELECT * 
-FROM  `drup_users` 
-WHERE  `uid` =3906
-AND  `data` LIKE  ''
-LIMIT 0 , 30*/
 		$datasearch = '%s:17:"paywhirl_password";s:32:"'.md5($password).'";%';
 		$uid = db_result(db_queryd_range('SELECT uid FROM {users} WHERE  uid = %d AND data like \'%s\'', $mail_uid,$datasearch  , 0, 1));
-	
-		die("Final: " . $uid);
-	
-		$login_args = array('mail' => $data["email"], 'paywhirl_password' => md5($data["password"]));
 		
-			print_r($login_args);
-		if ($existing = user_load($login_args)) {
-			$user = $existing;
-			print_r($user);
+		if (isset($uid)) {
+			if ($existing = user_load($uid)) {
+				return $existing;
+			}
 		}
-	
-		$query = db_query("select `uid` from {table_name} where `profile_fbuid` = %d ",$fbuserid );
-		while($result = db_fetch_object($query)){
-		 $uid = $result->uid ; 
-		 $user_exists = user_load(array('uid'=>$uid));
-		}	
+		
 	}
 	
 	

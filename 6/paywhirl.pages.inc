@@ -61,6 +61,8 @@
 				} else {
 					// PAYWHIRL LOGGING IN
 					if ($existing = _paywhirl_load_user($data["email"], $data["password"])) {
+						print_r($existing);
+						die();
 						$user = $existing;
 					}
 					

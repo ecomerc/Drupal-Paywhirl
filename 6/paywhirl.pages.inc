@@ -10,7 +10,6 @@ this.top.location = '$base_url';
 	}
 	
 	function paywhirl_user_page($account) {
-		drupal_set_title($account->name);
 		$key = variable_get('paywhirl_widgetkey',  "");
 		$server = variable_get('paywhirl_server',  "");
 		

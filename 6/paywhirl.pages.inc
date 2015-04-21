@@ -2,6 +2,12 @@
 	include_once("paywhirl.user.inc");
 	
 	
+	function paywhirl_breakout($account) {
+		global $user, $base_url;	
+		die("<html><head><script>
+this.top.location = '$base_url';
+</script></head><body><a href='$base_url' target='_top'>If you are not automatically redirected, please click here</a></body></html>");
+	}
 	
 	function paywhirl_user_page($account) {
 		drupal_set_title($account->name);
@@ -71,7 +77,7 @@
 				user_logout();
 			}
 		}
-		header("Location: $base_url");
+		header("Location: $base_url/paywhirl/breakout");
 		die();
 	}
 	

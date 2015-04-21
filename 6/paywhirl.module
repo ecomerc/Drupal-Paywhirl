@@ -12,13 +12,20 @@
 	} 
 	
 	
-	
 	function paywhirl_menu() {
 		$items = array();
 		
 		$items['paywhirl/passthrough'] = array(
 		'title' => 'paywhirl',
 		'page callback' => 'paywhirl_passthrough',
+		'access arguments' => array('access content'),
+		'file' => 'paywhirl.pages.inc',
+		'type' => MENU_CALLBACK,
+		);
+		
+		$items['paywhirl/breakout'] = array(
+		'title' => 'paywhirl',
+		'page callback' => 'paywhirl_breakout',
 		'access arguments' => array('access content'),
 		'file' => 'paywhirl.pages.inc',
 		'type' => MENU_CALLBACK,
@@ -62,6 +69,7 @@
 		'title' => 'Subscription',
 		'page callback' => 'paywhirl_user_page',
 		'file' => 'paywhirl.pages.inc',
+		'access arguments' => array('access content'),
 		'type' => MENU_LOCAL_TASK,
 		'weight' => 11,
 		);

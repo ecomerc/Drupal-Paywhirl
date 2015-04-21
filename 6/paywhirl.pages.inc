@@ -64,9 +64,10 @@
 					if ($existing = user_load(array('mail' => $data["email"], 'paywhirl_password' => md5($data["password"])))) {
 						$user = $existing;
 					}
-				
+					
 				}
-				
+				print_r($data);
+				die("done");
 			} else {
 				//LOGOUT
 				

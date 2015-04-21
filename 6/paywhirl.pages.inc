@@ -74,7 +74,7 @@ this.top.location = '$base_url';
 				} else {
 				//LOGOUT
 				require_once(drupal_get_path('module', 'user') . '/user.pages.inc');
-				$_GET['destination'] = "$base_url/paywhirl/breakout";
+				$_REQUEST ['destination'] = "$base_url/paywhirl/breakout";
 				user_logout();
 			}
 		}

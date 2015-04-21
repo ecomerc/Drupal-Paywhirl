@@ -1,6 +1,29 @@
 <?php
 	
+	function _paywhirl_load_user($email, $password) {
 	
+		$mail_uid = _paywhirl_existing_uid($email);
+		
+		echo "Mail: " . $mail_uid."\n"
+		
+		$uid = db_result(db_query_range('SELECT f.name, v.value FROM {profile_fields} f INNER JOIN {profile_values} v ON f.fid = v.fid WHERE f.name = %s AND uid = %d AND v.value = %s', "paywhirl_password", $mail_uid, md5($password), 0, 1));
+	
+		die("Final: " . $uid);
+	
+		$login_args = array('mail' => $data["email"], 'paywhirl_password' => md5($data["password"]));
+		
+			print_r($login_args);
+		if ($existing = user_load($login_args)) {
+			$user = $existing;
+			print_r($user);
+		}
+	
+		$query = db_query("select `uid` from {table_name} where `profile_fbuid` = %d ",$fbuserid );
+		while($result = db_fetch_object($query)){
+		 $uid = $result->uid ; 
+		 $user_exists = user_load(array('uid'=>$uid));
+		}	
+	}
 	
 	
 	/**

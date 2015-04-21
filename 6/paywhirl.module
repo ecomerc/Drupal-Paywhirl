@@ -31,6 +31,14 @@
 		'type' => MENU_CALLBACK,
 		);
 		
+		$items['subscribe'] = array(
+		'title' => 'Subscribe',
+		'page callback' => 'paywhirl_subscribe',
+		'access arguments' => array('access content'),
+		'file' => 'paywhirl.pages.inc',
+		'type' => MENU_CALLBACK,
+		);
+		
 		$items['paywhirl/webhook'] = array(
 		'title' => 'paywhirl',
 		'page callback' => 'paywhirl_webhook',

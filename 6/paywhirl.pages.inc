@@ -13,13 +13,23 @@ this.top.location = '$base_url';
 		drupal_set_title($account->name);
 		$key = variable_get('paywhirl_widgetkey',  "");
 		
-		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
+		//TODO make some sort of setting for the text
+		$content = "<p>This is the new subscription based login, if your account was created <b>before</b> April 21st 2015 - <a href='/user'>login here</a></p><script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
 		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget/login?api_key=".$key."'></iframe>";
 		
 		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
 		return  $content;
 	}
 	
+	function paywhirl_subscribe() {
+		$key = variable_get('paywhirl_widgetkey',  "");
+		
+		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
+		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='https://stage.paywhirl.com/widget?api_key=".$key."'></iframe>";
+		
+		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
+		return  $content;
+	}
 	
 	function paywhirl_login() {
 		$key = variable_get('paywhirl_widgetkey',  "");
@@ -107,12 +117,12 @@ this.top.location = '$base_url';
 			
 			// Retrieve the request's body and parse it as JSON
 			$input = @file_get_contents("php://input");
-			//$event_json = json_decode($input);
+			$event_json = json_decode($input);
 			// Do something with $event_json
 			http_response_code(200); // PHP 5.4 or greater
 			
 			// Create our message variables.
-			$variables = array('msg' => 'foo');
+			$variables = array('data' => $event_json);
 			
 			// Make sure at least one module implements our hook.
 			if (sizeof(module_implements('paywhirl_webhook')) > 0) {

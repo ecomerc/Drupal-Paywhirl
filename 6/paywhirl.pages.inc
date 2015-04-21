@@ -60,13 +60,8 @@
 					
 				} else {
 					// PAYWHIRL LOGGING IN
-					
-					$login_args = array('mail' => $data["email"], 'paywhirl_password' => md5($data["password"]));
-					
-						print_r($login_args);
-					if ($existing = user_load($login_args)) {
+					if ($existing = _paywhirl_load_user($data["email"], $data["password"])) {
 						$user = $existing;
-						print_r($user);
 					}
 					
 				}

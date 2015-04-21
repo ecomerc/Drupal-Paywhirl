@@ -4,7 +4,7 @@
 	
 		$mail_uid = _paywhirl_existing_uid($email);
 		
-		echo "Mail: " . $mail_uid."\n"
+		echo "Mail: " . $mail_uid."\n";
 		
 		$uid = db_result(db_query_range('SELECT f.name, v.value FROM {profile_fields} f INNER JOIN {profile_values} v ON f.fid = v.fid WHERE f.name = %s AND uid = %d AND v.value = %s', "paywhirl_password", $mail_uid, md5($password), 0, 1));
 	

@@ -124,6 +124,7 @@ this.top.location = '$base_url';
 			// Retrieve the request's body and parse it as JSON
 			$input = @file_get_contents("php://input");
 			$event_json = json_decode($input);
+			echo "<pre>";
 			// Do something with $event_json
 			print_r($event_json);
 			
@@ -136,7 +137,7 @@ this.top.location = '$base_url';
 				// Call all modules that implement the hook, and let them make changes to $variables.
 				$variables = module_invoke_all('paywhirl_webhook', $variables);
 			}
-			echo "variables:" . $variables; 
+			echo "\nvariables:" . print_r($variables, true); 
 		}
-		die("\nall good");
+		die("\nall good</pre>");
 	}			

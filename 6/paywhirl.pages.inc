@@ -14,7 +14,7 @@ this.top.location = '$base_url';
 		$key = variable_get('paywhirl_widgetkey',  "");
 		$server = variable_get('paywhirl_server',  "");
 		
-		$content = "<script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
+		$content = "<p>If you signup for a new plan below and you do not already have a subscription account, please be sure to use the same email address as you are currently logged in with, this will ensure that your accounts are linked, and you will be able to login with your subscription account.</p><script type='text/javascript' src='https://stage.paywhirl.com/js/widget.js'></script>
 		<iframe frameBorder='0' style='width:100%; height:auto; border:0; overflow:hidden;' id='paywhirl_frame' scrolling='no' src='$server/widget/login?api_key=".$key."'></iframe>";
 		
 		$content = "<div class=\"node\"><div class=\"content\">" . $content . "</div></div>";
@@ -125,6 +125,7 @@ this.top.location = '$base_url';
 			$input = @file_get_contents("php://input");
 			$event_json = json_decode($input);
 			// Do something with $event_json
+			print_r($event_json);
 			http_response_code(200); // PHP 5.4 or greater
 			
 			// Create our message variables.

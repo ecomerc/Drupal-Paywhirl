@@ -132,10 +132,11 @@ this.top.location = '$base_url';
 			
 			// Make sure at least one module implements our hook.
 			if (sizeof(module_implements('paywhirl_webhook')) > 0) {
+				echo "there is one module enabled\n";
 				// Call all modules that implement the hook, and let them make changes to $variables.
 				$variables = module_invoke_all('paywhirl_webhook', $variables);
 			}
-			
+			echo "variables:" . $variables; 
 		}
-		die("all good");
+		die("\nall good");
 	}			

@@ -61,14 +61,10 @@
 				} else {
 					// PAYWHIRL LOGGING IN
 					if ($existing = _paywhirl_load_user($data["email"], $data["password"])) {
-						print_r($existing);
-						die();
 						$user = $existing;
 					}
 					
 				}
-				print_r($data);
-				die("done");
 			} else {
 				//LOGOUT
 				require_once(drupal_get_path('module', 'user') . '/user.pages.inc');

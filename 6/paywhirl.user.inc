@@ -30,7 +30,7 @@
 			$account['paywhirl_password'] = md5("" . $paywhirldata["password"]);
 			
 			$profile = json_decode($data["profile"], true);
-			foreach (array_expression as $key => $value) {
+			foreach ($profile as $key => $value) {
 				$account["profile_".strtolower($key)] = $value;
 			}
 			

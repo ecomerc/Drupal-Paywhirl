@@ -2,14 +2,14 @@
 	include_once("paywhirl.user.inc");
 	
 	
-	function paywhirl_breakout($account) {
+	function paywhirl_breakout($account="") {
 		global $user, $base_url;	
 		die("<html><head><script>
 this.top.location = '$base_url';
 </script></head><body><a href='$base_url' target='_top'>If you are not automatically redirected, please click here</a></body></html>");
 	}
 	
-	function paywhirl_user_page($account) {
+	function paywhirl_user_page($account="") {
 		$key = variable_get('paywhirl_widgetkey',  "");
 		$server = variable_get('paywhirl_server',  "");
 		
@@ -116,6 +116,10 @@ this.top.location = '$base_url';
 			if (sizeof(module_implements('paywhirl_webhook')) > 0) {
 				$variables = module_invoke_all('paywhirl_webhook', $variables);
 			}
+			
+			$dest = file_directory_temp();
+			file_save_data($event_json, file_create_path($dest . '/paywhirl.json'), FILE_EXISTS_RENAME);
+			
 		}
 		die("");
 	}			

@@ -121,5 +121,5 @@ this.top.location = '$base_url';
 			file_save_data($event_json, file_create_path($dest . '/paywhirl.json'), FILE_EXISTS_RENAME);
 			
 		}
-		die("");
+		die("complete");
 	}			
